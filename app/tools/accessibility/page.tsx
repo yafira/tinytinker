@@ -2,7 +2,7 @@
 import { useState, useCallback } from "react";
 import ToolPage from "@/components/ToolPage";
 
-// --- color utils ---
+// color utils
 
 function hexToRgb(hex: string): [number, number, number] | null {
   const clean = hex.replace("#", "");
@@ -26,8 +26,8 @@ function rgbToHex(r: number, g: number, b: number): string {
     "#" +
     [r, g, b]
       .map((v) => Math.round(v).toString(16).padStart(2, "0"))
-      .toUpperCase()
       .join("")
+      .toUpperCase()
   );
 }
 
@@ -60,7 +60,7 @@ function wcagLevel(ratio: number): {
   };
 }
 
-// --- color blindness simulation ---
+// color blindness simulation
 
 type CBType = "protanopia" | "deuteranopia" | "tritanopia" | "achromatopsia";
 
@@ -106,7 +106,7 @@ function simulateColorBlindness(
   ];
 }
 
-// --- readable text suggester ---
+// readable text suggester
 
 function suggestTextColor(
   r: number,
