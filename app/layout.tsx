@@ -82,10 +82,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <title>tinytinker.tools</title>
-        <meta
-          name="description"
-          content="tinkerer tools for people who make things."
-        />
+        <meta name="description" content="a soft toolkit for curious makers." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="icon"
@@ -148,25 +145,30 @@ export default function RootLayout({
             <nav style={{ flex: 1, padding: "12px 8px" }}>
               {nav.map((section) => (
                 <div key={section.label} style={{ marginBottom: 18 }}>
+                  {/* section label — pastel yellow highlight */}
                   <div
+                    className="nav-section-label"
                     style={{
                       fontSize: 10,
                       letterSpacing: "0.16em",
                       textTransform: "uppercase",
-                      color: "var(--ink-soft)",
-                      padding: "0 6px",
+                      color: "#92610a",
+                      padding: "3px 8px",
                       marginBottom: 5,
                       display: "flex",
                       alignItems: "center",
                       gap: 4,
                       fontWeight: 500,
+                      background: "#fefce8",
+                      border: "1px solid #fde68a",
+                      borderRadius: 4,
                     }}
                   >
-                    <span style={{ color: "var(--accent)", fontSize: 8 }}>
-                      ✦
-                    </span>
+                    <span style={{ color: "#f59e0b", fontSize: 8 }}>✦</span>
                     {section.label}
                   </div>
+
+                  {/* nav links */}
                   {section.items.map((item) => {
                     const active = path === item.href;
                     return (
