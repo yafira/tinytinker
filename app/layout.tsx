@@ -8,46 +8,74 @@ const nav = [
   {
     label: "electronics",
     items: [
-      { href: "/tools/resistor", label: "resistor decoder" },
-      { href: "/tools/ohms-law", label: "ohm's law calc" },
-      { href: "/tools/wire-gauge", label: "wire gauge ref" },
-      { href: "/tools/capacitor", label: "capacitor decoder" },
+      { href: "/tools/resistor", label: "resistor decoder", tag: "decode" },
+      { href: "/tools/ohms-law", label: "ohm's law", tag: "calc" },
+      { href: "/tools/wire-gauge", label: "wire gauge ref", tag: "ref" },
+      { href: "/tools/capacitor", label: "capacitor decoder", tag: "decode" },
     ],
   },
   {
     label: "generative text",
     items: [
-      { href: "/tools/markov", label: "markov generator" },
-      { href: "/tools/cutup", label: "cut-up machine" },
-      { href: "/tools/glitch-text", label: "glitch text" },
-      { href: "/tools/zine-filler", label: "zine filler" },
-      { href: "/tools/ascii", label: "ascii generator" },
+      { href: "/tools/markov", label: "markov generator", tag: "gen" },
+      { href: "/tools/cutup", label: "cut-up machine", tag: "gen" },
+      { href: "/tools/glitch-text", label: "glitch text", tag: "gen" },
+      { href: "/tools/zine-filler", label: "zine filler", tag: "gen" },
+      { href: "/tools/ascii", label: "ascii generator", tag: "gen" },
     ],
   },
   {
     label: "color & design",
     items: [
-      { href: "/tools/palette", label: "color palette gen" },
-      { href: "/tools/color-converter", label: "color converter" },
-      { href: "/tools/hex-name", label: "hex color namer" },
-      { href: "/tools/color-cheatsheet", label: "color cheatsheet" },
-      { href: "/tools/accessibility", label: "accessibility checker" },
+      { href: "/tools/palette", label: "color palette", tag: "gen" },
+      {
+        href: "/tools/color-converter",
+        label: "color converter",
+        tag: "convert",
+      },
+      { href: "/tools/hex-name", label: "hex color namer", tag: "decode" },
+      {
+        href: "/tools/color-cheatsheet",
+        label: "color cheatsheet",
+        tag: "ref",
+      },
+      {
+        href: "/tools/accessibility",
+        label: "accessibility checker",
+        tag: "test",
+      },
     ],
   },
   {
     label: "print & zine",
-    items: [{ href: "/tools/zine-imposer", label: "zine imposer" }],
+    items: [
+      { href: "/tools/zine-imposer", label: "zine imposer", tag: "plan" },
+    ],
   },
   {
     label: "measurements",
-    items: [{ href: "/tools/unit-converter", label: "unit converter" }],
+    items: [
+      {
+        href: "/tools/unit-converter",
+        label: "unit converter",
+        tag: "convert",
+      },
+    ],
   },
   {
     label: "code & dev",
     items: [
-      { href: "/tools/code-identifier", label: "code identifier" },
-      { href: "/tools/binary-converter", label: "binary / hex converter" },
-      { href: "/tools/regex-tester", label: "regex tester" },
+      {
+        href: "/tools/code-identifier",
+        label: "code identifier",
+        tag: "decode",
+      },
+      {
+        href: "/tools/binary-converter",
+        label: "binary / hex",
+        tag: "convert",
+      },
+      { href: "/tools/regex-tester", label: "regex tester", tag: "test" },
     ],
   },
 ];
@@ -94,7 +122,7 @@ export default function RootLayout({
           {/* sidebar */}
           <aside
             style={{
-              width: 220,
+              width: 230,
               flexShrink: 0,
               borderRight: "1.5px solid var(--border)",
               background: "var(--bg-sidebar)",
@@ -145,23 +173,19 @@ export default function RootLayout({
             <nav style={{ flex: 1, padding: "12px 8px" }}>
               {nav.map((section) => (
                 <div key={section.label} style={{ marginBottom: 18 }}>
-                  {/* section label — pastel yellow highlight */}
+                  {/* section label */}
                   <div
                     className="nav-section-label"
                     style={{
                       fontSize: 10,
                       letterSpacing: "0.16em",
                       textTransform: "uppercase",
-                      color: "#92610a",
                       padding: "3px 8px",
                       marginBottom: 5,
                       display: "flex",
                       alignItems: "center",
                       gap: 4,
                       fontWeight: 500,
-                      background: "#fefce8",
-                      border: "1px solid #fde68a",
-                      borderRadius: 4,
                     }}
                   >
                     <span style={{ color: "#f59e0b", fontSize: 8 }}>✦</span>
@@ -177,7 +201,9 @@ export default function RootLayout({
                         href={item.href}
                         className={active ? "nav-link-active" : ""}
                         style={{
-                          display: "block",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
                           padding: "5px 8px",
                           fontSize: 13,
                           color: active ? "var(--ink)" : "var(--ink-soft)",
@@ -197,7 +223,10 @@ export default function RootLayout({
                               "transparent";
                         }}
                       >
-                        {item.label}
+                        <span>{item.label}</span>
+                        <span className={`tag tag-${item.tag}`}>
+                          {item.tag}
+                        </span>
                       </Link>
                     );
                   })}
