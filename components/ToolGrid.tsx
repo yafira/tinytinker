@@ -13,18 +13,6 @@ type Tag =
   | "plan"
   | "guide";
 
-const TAG_LABELS: Record<string, string> = {
-  all: "all",
-  calc: "calc",
-  gen: "gen",
-  ref: "ref",
-  decode: "decode",
-  convert: "convert",
-  test: "test",
-  plan: "plan",
-  guide: "guide",
-};
-
 const allTools = [
   {
     section: "electronics",
@@ -196,8 +184,6 @@ export default function ToolGrid() {
     }))
     .filter((section) => section.tools.length > 0);
 
-  const totalVisible = filtered.reduce((sum, s) => sum + s.tools.length, 0);
-
   return (
     <div>
       {/* filter bar */}
@@ -223,7 +209,7 @@ export default function ToolGrid() {
           {ALL_TAGS.map((tag) => (
             <button
               key={tag}
-              onClick={() => setActive(tag)}
+              onClick={() => setActive(tag === active ? "all" : tag)}
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: tag === "all" ? 11 : 9,
@@ -243,24 +229,12 @@ export default function ToolGrid() {
               }}
               className={tag !== "all" ? `tag tag-${tag}` : ""}
             >
-              {TAG_LABELS[tag]}
+              {tag}
               {tag !== "all" && active === tag && (
                 <span style={{ marginLeft: 4, opacity: 0.6 }}>✕</span>
               )}
             </button>
           ))}
-          {active !== "all" && (
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                color: "var(--ink-ghost)",
-                marginLeft: 4,
-              }}
-            >
-              {totalVisible} {totalVisible === 1 ? "tool" : "tools"}
-            </span>
-          )}
         </div>
       </div>
 
