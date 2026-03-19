@@ -68,8 +68,9 @@ export default function Home() {
               lineHeight: 1.8,
             }}
           >
-            tiny, focused utilities for makers, engineers, artists, crafters &
-            tinkerers — without leaving your browser.
+            tiny, focused utilities for makers, engineers, artists, crafters,
+            tinkerers, for you & curious minds everywhere — without leaving your
+            browser.
           </p>
         </div>
 
