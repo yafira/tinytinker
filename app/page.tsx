@@ -14,7 +14,7 @@ export default function Home() {
           gap: 40,
         }}
       >
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, minWidth: 260 }}>
           <div
             style={{
               fontSize: 11,

@@ -12,7 +12,8 @@ const nav = [
       { href: "/tools/ohms-law", label: "ohm's law" },
       { href: "/tools/wire-gauge", label: "wire gauge ref" },
       { href: "/tools/capacitor", label: "capacitor decoder" },
-      { href: "/tools/555-timer", label: "555 timer", tag: "calc" },
+      { href: "/tools/555-timer", label: "555 timer" },
+      { href: "/tools/voltage-divider", label: "voltage divider" },
     ],
   },
   {
@@ -60,6 +61,7 @@ export default function RootLayout({
 }) {
   const path = usePathname();
   const [dark, setDark] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("theme");
@@ -68,6 +70,19 @@ export default function RootLayout({
       document.documentElement.setAttribute("data-theme", "dark");
     }
   }, []);
+
+  /* close menu on route change */
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [path]);
+
+  /* prevent body scroll when menu open */
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   const toggleTheme = () => {
     const next = !dark;
@@ -78,6 +93,121 @@ export default function RootLayout({
     );
     localStorage.setItem("theme", next ? "dark" : "light");
   };
+
+  const SidebarContent = () => (
+    <>
+      {/* logo */}
+      <Link
+        href="/"
+        style={{
+          textDecoration: "none",
+          display: "block",
+          padding: "20px 16px 16px",
+          borderBottom: "1.5px solid var(--border)",
+        }}
+        onClick={() => setMenuOpen(false)}
+      >
+        <div
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 15,
+            fontWeight: 500,
+            color: "var(--ink)",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          tinytinker<span style={{ color: "var(--accent)" }}>✦</span>tools
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 11,
+            color: "var(--ink-soft)",
+            marginTop: 3,
+            letterSpacing: "0.1em",
+          }}
+        >
+          handmade web tools
+        </div>
+      </Link>
+
+      {/* nav */}
+      <nav style={{ flex: 1, padding: "12px 8px", overflowY: "auto" }}>
+        {nav.map((section) => (
+          <div key={section.label} style={{ marginBottom: 18 }}>
+            <div
+              className="nav-section-label"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                padding: "3px 8px",
+                marginBottom: 5,
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+                fontWeight: 500,
+              }}
+            >
+              <span style={{ color: "#f59e0b", fontSize: 8 }}>✦</span>
+              {section.label}
+            </div>
+            {section.items.map((item) => {
+              const active = path === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={active ? "nav-link-active" : ""}
+                  style={{
+                    display: "block",
+                    padding: "5px 8px",
+                    fontSize: 13,
+                    color: active ? "var(--ink)" : "var(--ink-soft)",
+                    textDecoration: "none",
+                    borderRadius: 5,
+                    transition: "all 0.1s",
+                    fontWeight: active ? 500 : 400,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active)
+                      (e.currentTarget as HTMLElement).style.background =
+                        "var(--nav-hover)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active)
+                      (e.currentTarget as HTMLElement).style.background =
+                        "transparent";
+                  }}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
+      </nav>
+
+      {/* footer */}
+      <div
+        style={{ padding: "12px 16px", borderTop: "1.5px solid var(--border)" }}
+      >
+        <div
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 11,
+            color: "var(--ink-soft)",
+            lineHeight: 2,
+            letterSpacing: "0.04em",
+          }}
+        >
+          no logins. no tracking.
+          <br />
+          handmade web tools.
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <html lang="en">
@@ -92,8 +222,9 @@ export default function RootLayout({
       </head>
       <body>
         <div style={{ display: "flex", minHeight: "100vh" }}>
-          {/* sidebar */}
+          {/* desktop sidebar */}
           <aside
+            className="sidebar-desktop"
             style={{
               width: 230,
               flexShrink: 0,
@@ -108,125 +239,99 @@ export default function RootLayout({
               transition: "background 0.2s, border-color 0.2s",
             }}
           >
-            {/* logo */}
-            <Link
-              href="/"
-              style={{
-                textDecoration: "none",
-                display: "block",
-                padding: "20px 16px 16px",
-                borderBottom: "1.5px solid var(--border)",
-              }}
-            >
+            <SidebarContent />
+          </aside>
+
+          {/* mobile header */}
+          <div
+            className="mobile-header"
+            style={{
+              display: "none",
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 56,
+              background: "var(--bg-sidebar)",
+              borderBottom: "1.5px solid var(--border)",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0 16px",
+              zIndex: 90,
+              transition: "background 0.2s",
+            }}
+          >
+            <Link href="/" style={{ textDecoration: "none" }}>
               <div
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: 500,
                   color: "var(--ink)",
-                  letterSpacing: "-0.02em",
                 }}
               >
                 tinytinker<span style={{ color: "var(--accent)" }}>✦</span>tools
               </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  color: "var(--ink-soft)",
-                  marginTop: 3,
-                  letterSpacing: "0.1em",
-                }}
-              >
-                handmade web tools
-              </div>
             </Link>
-
-            {/* nav */}
-            <nav style={{ flex: 1, padding: "12px 8px" }}>
-              {nav.map((section) => (
-                <div key={section.label} style={{ marginBottom: 18 }}>
-                  {/* section label */}
-                  <div
-                    className="nav-section-label"
-                    style={{
-                      fontSize: 10,
-                      letterSpacing: "0.16em",
-                      textTransform: "uppercase",
-                      padding: "3px 8px",
-                      marginBottom: 5,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 4,
-                      fontWeight: 500,
-                    }}
-                  >
-                    <span style={{ color: "#f59e0b", fontSize: 8 }}>✦</span>
-                    {section.label}
-                  </div>
-
-                  {/* nav links */}
-                  {section.items.map((item) => {
-                    const active = path === item.href;
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className={active ? "nav-link-active" : ""}
-                        style={{
-                          display: "block",
-                          padding: "5px 8px",
-                          fontSize: 13,
-                          color: active ? "var(--ink)" : "var(--ink-soft)",
-                          textDecoration: "none",
-                          borderRadius: 5,
-                          transition: "all 0.1s",
-                          fontWeight: active ? 500 : 400,
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!active)
-                            (e.currentTarget as HTMLElement).style.background =
-                              "var(--nav-hover)";
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!active)
-                            (e.currentTarget as HTMLElement).style.background =
-                              "transparent";
-                        }}
-                      >
-                        {item.label}
-                      </Link>
-                    );
-                  })}
-                </div>
-              ))}
-            </nav>
-
-            {/* footer */}
-            <div
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
               style={{
-                padding: "12px 16px",
-                borderTop: "1.5px solid var(--border)",
+                background: "none",
+                border: "1.5px solid var(--border)",
+                borderRadius: 6,
+                padding: "6px 10px",
+                cursor: "pointer",
+                fontFamily: "var(--font-mono)",
+                fontSize: 13,
+                color: "var(--ink-soft)",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
               }}
             >
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  color: "var(--ink-soft)",
-                  lineHeight: 2,
-                  letterSpacing: "0.04em",
-                }}
-              >
-                no logins. no tracking.
-                <br />
-                handmade web tools.
-              </div>
-            </div>
+              {menuOpen ? "✕" : "☰"} menu
+            </button>
+          </div>
+
+          {/* mobile menu overlay */}
+          {menuOpen && (
+            <div
+              className="mobile-overlay"
+              onClick={() => setMenuOpen(false)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                background: "rgba(0,0,0,0.4)",
+                zIndex: 95,
+              }}
+            />
+          )}
+
+          {/* mobile sidebar drawer */}
+          <aside
+            className="sidebar-mobile"
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: 280,
+              height: "100vh",
+              background: "var(--bg-sidebar)",
+              borderRight: "1.5px solid var(--border)",
+              display: "flex",
+              flexDirection: "column",
+              zIndex: 100,
+              transform: menuOpen ? "translateX(0)" : "translateX(-100%)",
+              transition: "transform 0.25s ease",
+              overflowY: "auto",
+            }}
+          >
+            <SidebarContent />
           </aside>
 
           {/* main content */}
           <main
+            className="main-content"
             style={{
               flex: 1,
               minWidth: 0,
@@ -243,7 +348,7 @@ export default function RootLayout({
           className="theme-toggle"
           onClick={toggleTheme}
           title={dark ? "switch to light" : "switch to dark"}
-          style={{ position: "fixed", top: 16, right: 20, zIndex: 100 }}
+          style={{ position: "fixed", top: 16, right: 20, zIndex: 101 }}
         >
           {dark ? "☀︎" : "☽"}
         </button>

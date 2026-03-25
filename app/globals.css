@@ -346,3 +346,33 @@ input[type="range"] {
   border-color: var(--accent);
   transform: scale(1.05);
 }
+
+/* mobile */
+
+@media (max-width: 768px) {
+  .sidebar-desktop {
+    display: none !important;
+  }
+  .mobile-header {
+    display: flex !important;
+  }
+  .main-content {
+    padding-top: 56px;
+  }
+
+  .sidebar-mobile {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .sidebar-mobile {
+    display: none !important;
+  }
+  .mobile-header {
+    display: none !important;
+  }
+  .mobile-overlay {
+    display: none !important;
+  }
+}
