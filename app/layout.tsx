@@ -7,10 +7,6 @@ import GitHubStars from "@/components/GitHubStars";
 
 const nav = [
   {
-    label: "e-textiles",
-    items: [{ href: "/tools/conductive-thread", label: "conductive thread" }],
-  },
-  {
     label: "electronics",
     items: [
       { href: "/tools/resistor", label: "resistor decoder" },
@@ -20,6 +16,10 @@ const nav = [
       { href: "/tools/555-timer", label: "555 timer" },
       { href: "/tools/voltage-divider", label: "voltage divider" },
     ],
+  },
+  {
+    label: "e-textiles",
+    items: [{ href: "/tools/conductive-thread", label: "conductive thread" }],
   },
   {
     label: "code & dev",
