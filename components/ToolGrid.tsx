@@ -15,17 +15,6 @@ type Tag =
 
 const allTools = [
   {
-    section: "soft circuits",
-    tools: [
-      {
-        href: "/tools/conductive-thread",
-        label: "conductive thread",
-        desc: "thread resistance + LED circuit check",
-        tag: "calc",
-      },
-    ],
-  },
-  {
     section: "electronics",
     tools: [
       {
@@ -57,6 +46,23 @@ const allTools = [
         label: "555 timer",
         desc: "astable & monostable frequency calculator",
         tag: "calc",
+      },
+    ],
+  },
+  {
+    section: "e-textiles",
+    tools: [
+      {
+        href: "/tools/conductive-thread",
+        label: "conductive thread",
+        desc: "thread resistance + LED circuit check",
+        tag: "calc",
+      },
+      {
+        href: "/tools/fabric-resistance",
+        label: "fabric & materials",
+        desc: "resistance ref for conductive fabrics, sensors & insulators",
+        tag: "ref",
       },
     ],
   },

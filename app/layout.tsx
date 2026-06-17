@@ -19,7 +19,10 @@ const nav = [
   },
   {
     label: "e-textiles",
-    items: [{ href: "/tools/conductive-thread", label: "conductive thread" }],
+    items: [
+      { href: "/tools/conductive-thread", label: "conductive thread" },
+      { href: "/tools/fabric-resistance", label: "fabric & materials" },
+    ],
   },
   {
     label: "code & dev",
