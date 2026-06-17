@@ -7,6 +7,10 @@ import GitHubStars from "@/components/GitHubStars";
 
 const nav = [
   {
+    label: "e-textiles",
+    items: [{ href: "/tools/conductive-thread", label: "conductive thread" }],
+  },
+  {
     label: "electronics",
     items: [
       { href: "/tools/resistor", label: "resistor decoder" },

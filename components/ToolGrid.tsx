@@ -15,6 +15,17 @@ type Tag =
 
 const allTools = [
   {
+    section: "soft circuits",
+    tools: [
+      {
+        href: "/tools/conductive-thread",
+        label: "conductive thread",
+        desc: "thread resistance + LED circuit check",
+        tag: "calc",
+      },
+    ],
+  },
+  {
     section: "electronics",
     tools: [
       {
